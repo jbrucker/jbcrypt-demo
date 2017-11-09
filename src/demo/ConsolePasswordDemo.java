@@ -9,9 +9,12 @@ import org.mindrot.jbcrypt.BCrypt;
  * using JBCrypt, and then check the password later using the
  * encrypted original password.
  * 
+ * This program first asks the user for a password to encrypt.
+ * It encrypts the password and discards the original (unencrypted).
+ * Then is asks for some strings (test passwords) to compare
+ * with the encrypted password.
  * 
  * @author jim
- *
  */
 public class ConsolePasswordDemo {
 	public static final Scanner console = new Scanner(System.in);
@@ -27,11 +30,11 @@ public class ConsolePasswordDemo {
 	 * We use BCrypt.checkpw() so that we can compare the 
 	 * plain text (testpass) to an already-encrypted password.
 	 * 
-	 * @param testpass plain-text password to compare
+	 * @param testpasswd plain-text password to compare
 	 * @return true if testpass matches the saved password
 	 */
-	public boolean verify(String testpass) {
-		return BCrypt.checkpw(testpass, encryptedPassword);
+	public boolean verifyPassword(String testpasswd) {
+		return BCrypt.checkpw(testpasswd, encryptedPassword);
 	}
 	
 	/**
@@ -66,7 +69,7 @@ public class ConsolePasswordDemo {
 			System.out.print("Password to try: ");
 			String candidate = console.nextLine().trim();
 			if (candidate.isEmpty()) break;
-			if ( verify(candidate) ) System.out.println("Matches!");
+			if ( verifyPassword(candidate) ) System.out.println("Matches!");
 			else System.out.println("No match.");
 		}
 	}

@@ -66,6 +66,8 @@ else
 
 BCrypt is a one-way hash. There's no known way to decrypt the result and recover the original password (except maybe, the NSA).  The encryption uses a randomly chosen "salt" as part of the algorithm to prevent a pre-computed dictionary attack on encrypted passwords.  It also has a user-selectable number of rounds to make brute force attacks more computationally intensive. (The values are stored as the `$2a$10$` part of the hashed password.)
 
+In recent years, there have been some success attacks on the JVM and heap.  Since Strings are stored on the heap, there's a small chance that a hacker (if they could hack into your JVM) could recover the String containing a user's unencypted password, because Strings are immutable (no way to clear the value).  Can't do much about this because JBCrypt's methods require String for password.  It seems pretty hard, though, since the String's memory will be recycled and reused, and the hacker's app needs simultaneous access to your app's memory.
+
 ### Benefit For Your Application
 
 Instead of storing plain text passwords for your users, you store only the encrypted (hashed) values.  If your accounts database is hacked, its computationally very hard for a hacker to recover user's password... unless the user selects a dumb password like "secret", "password", or "monkey". 
