@@ -27,7 +27,7 @@ There are 2 sample users in the data file:
 | harry    | hackme   |Harry Hacker |
 | sally    | hackme2  |Sally Cracker |
 
-By viewing the file, you can see that the plain text passwords aren't stored, but you can still "login" as these users.
+By viewing this file, you can see that plain text passwords aren't stored, but you can still "login" as these users.
 
 ## Installation and Run
 
