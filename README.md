@@ -54,8 +54,10 @@ $2a$10$r8CPhDjVZkeh0j/MeamolOjwr2VrAZVz45pe2ZbwfvsBcrPIDbv4a
 ```
 To test if a new string is same as the original string, you call JBCrypt.checkpw with the encrypted string as a parameter.  For example:
 ```java
-// the encrypted password. Usually stored in a database of user info.
-String encrypted = "$2a$10$r8CPhDjVZkeh0j/MeamolOjwr2VrAZVz45pe2ZbwfvsBcrPIDbv4a";
+// Encrypt user's password ("secret"):
+String encrypted = BCrypt.hashpw("secret", BCrypt.gensalt());
+// The encrypted password would usually be stored in a database of user info.
+// encrypted = "$2a$10$r8CPhDjVZkeh0j/MeamolOjwr2VrAZVz45pe2ZbwfvsBcrPIDbv4a"
 
 String testpassword = "some_password_to_test";
 
@@ -65,9 +67,10 @@ else
         System.out.println("no match");
 ```
 
-BCrypt is a one-way hash. There's no known way to decrypt the result and recover the original password (except maybe, the NSA).  The encryption uses a randomly chosen "salt" as part of the algorithm to prevent a pre-computed dictionary attack on encrypted passwords.  It also has a user-selectable number of rounds to make brute force attacks more computationally intensive. (The values are stored as the `$2a$10$` part of the hashed password.)
+BCrypt is a one-way hash. There's no known way to decrypt the result and recover the original password.  Encryption uses a randomly chosen "salt" as part of the algorithm to prevent a pre-computed dictionary attack on encrypted passwords.  It also has a user-selectable number of rounds to make brute force attacks more computationally intensive. (The values are stored as the `$2a$10$` part of the hashed password.)
 
-In recent years, there have been some success attacks on the JVM and heap.  Since Strings are stored on the heap, there's a small chance that a hacker (if they could hack into your JVM) could recover the String containing a user's unencypted password, because Strings are immutable (no way to clear the value).  Can't do much about this because JBCrypt's methods require String for password.  It seems pretty hard, though, since the String's memory will be recycled and reused, and the hacker's app needs simultaneous access to your app's memory.
+A possible (but hard to exploit) weakness is that the user's password and encrypted password are stored in memory as Strings.  Strings are immutable, so we can't programmatically erase their contents.  If a hacker has access to your JVM's heap space or computer's real memory, he could conceivably (and with luck) recover the text from the Strings.
+
 
 ### Benefit For Your Application
 
