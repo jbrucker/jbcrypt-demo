@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -24,7 +25,7 @@ import javafx.stage.Stage;
  * @author jim
  */
 public class LoginController {
-	private final String default_message = "Encrypt My Password!";
+	private final String default_message = "Please login";
 	// The @FXML annotations are used to associate controls in FXML form
 	// with objects in this controller.
 	@FXML
@@ -71,6 +72,8 @@ public class LoginController {
 			welcome(info.realname); // just for amusement
 			// clear the input fields so you can login again
 			clearFormFields();
+			// set focus to username field
+			usernameField.requestFocus();
 		}
 		else {
 			showErrorMessage("Sorry, wrong password");
@@ -88,11 +91,13 @@ public class LoginController {
 
 	/** Display a message in the information field. */
 	private void showErrorMessage(String message) {
+		messageLabel.setTextFill( Color.RED );
 		messageLabel.setText(message);	
 	}
 
 	/** Clear the information field. */
 	private void clearErrorMessage() {
+		messageLabel.setTextFill( Color.BLUE );
 		messageLabel.setText(default_message);	
 	}
 	

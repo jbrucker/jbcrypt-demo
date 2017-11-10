@@ -49,8 +49,7 @@ public class ConsolePasswordDemo {
 		this.encryptedPassword = BCrypt.hashpw(passwd, BCrypt.gensalt());
 		
 		// for demonstration:
-		System.out.println("Your (really long) encrypted password is: ");
-		System.out.println( this.encryptedPassword );
+		System.out.println("Your encrypted password is: "+this.encryptedPassword );
 	}
 
 	/** Interactive demo of encrypting a password entered at the console.
@@ -63,8 +62,8 @@ public class ConsolePasswordDemo {
 		String password = console.nextLine().trim();
 		savePassword( password );
 		
-		System.out.println("\nNow enter strings to compare with your original password.");
-		System.out.println("Enter a blank line to quit");
+		System.out.println("\nEnter strings to compare with your original password.");
+		System.out.println("Enter a blank line to quit.\n");
 		while(true) {
 			System.out.print("Password to try: ");
 			String candidate = console.nextLine().trim();

@@ -28,7 +28,7 @@
             <Label text="Username:" GridPane.rowIndex="1" />
             <Label text="Password:" GridPane.rowIndex="2" />
             <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <PasswordField fx:id="passwordField" onAction="#handleLogin" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Button fx:id="loginButton" mnemonicParsing="false" onAction="#handleLogin" prefHeight="26.0" prefWidth="98.0" text="Login" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
             <Label text="No Username?" GridPane.rowIndex="4" />
             <Button fx:id="addUserButton" mnemonicParsing="false" onAction="#handleAddUser" text="Create User" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />

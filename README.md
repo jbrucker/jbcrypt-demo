@@ -2,12 +2,13 @@
 
 This project contains two examples of how to use JBCrypt in Java.
 
-* **demo/ConsolePasswordDemo** - very simple. Enter a password at the console.  The app encrypts and remembers the password.  Then it prompts you to re-enter any passwords you want.  This shows that the app only needs the encrypted password to verify a user's password.
+* **demo/ConsolePasswordDemo** - simple console demonstration of how to use JBCrypt to encrypt a user's password, then use the encrypted password to check a subsequent password. You enter a password at the console.  The app encrypts and remembers the password.  Then it prompts you to re-enter any passwords you want.  This shows that only the encrypted password is needed to verify a user's password.
 ```shell
 Enter a new password: secret
+Encrypted password is: $2a$10$a4d1XHlLvI1mc8RhiwHG1O5JTqUjpysOYGBCthnqXUdaA1mS/Vn3S 
 
-Now enter strings to compare with your original password.
-Enter a blank line to quit
+Now enter strings to compare with your original password. Enter blank line to quit.
+
 Password to try: fuzzball
 No match.
 Password to try: SECRET
@@ -18,7 +19,7 @@ Password to try: secret
 Matches!
 ``` 
 
-* **org/ske/passwdmgr/LoginApp.java** (and other files) - GUI demo displays a Login form and AddUser form.  You can add "users" and the data is saved in a file named `userinfo.txt` in the project root directory.  
+* **org/ske/passwdmgr/LoginApp.java** (and other files) - GUI demo displays a Login form and AddUser form.  The forms let you add new users to the `userinfo.txt` file, or login an existing user.  "Login" just displays a "welcome back" message, to demonstrate that it works.
 
 There are 2 sample users in the data file:
 
