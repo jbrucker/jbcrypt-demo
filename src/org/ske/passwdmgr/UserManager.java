@@ -10,7 +10,7 @@ import java.io.*;
 import java.util.HashMap;
 
 /**
- * Manage user account information.
+ * Save and return user account information.
  * This class adds users and returns users by username.
  * While running, user data is stored in a map.
  * Its also written to a file (USERFILE) for persistence.
@@ -28,7 +28,6 @@ public class UserManager {
 	private static final String USERFILE = "userinfo.txt";
 	// Map of known users
 	private Map<String,UserInfo> users = new HashMap<String,UserInfo>();
-	private ClassLoader loader;
 	// Singleton instance of UserManager
 	private static UserManager instance = new UserManager() ;
 	// Logging
@@ -36,16 +35,18 @@ public class UserManager {
 	
 	/** Constructor is private to prevent creating objects. */
 	private UserManager() {
-		this.loader = this.getClass().getClassLoader();
 		logger = Logger.getLogger(this.getClass().getSimpleName());
 		loadUsers();
 	}
 	
 	/** Load user data from external resource (file or database). */
 	private void loadUsers() {
+		final String FIELD_SEP = ":";
+		// try to open the file as a classpath resource
+		ClassLoader loader = this.getClass().getClassLoader();
 		InputStream in = loader.getResourceAsStream(USERFILE);
 		if (in == null) try {
-			// try to open file as file system object
+			// then try to open file as file system object
 			in = new FileInputStream(USERFILE);
 		} catch (FileNotFoundException ex) {
 			// give up
@@ -55,11 +56,11 @@ public class UserManager {
 			return;
 		}
 		// read all lines from userinfo file
-		// format: username:password:real-name
+		// format: username:password:real_name
 		Scanner reader = new Scanner(in);
 		while(reader.hasNextLine()) {
 			String line = reader.nextLine().trim();
-			String[] fields = line.split(":");
+			String[] fields = line.split(FIELD_SEP);
 			if (fields.length != 3) continue; // should log the error
 			// constructor:     UserInfo(username, realname, password)
 			UserInfo info = new UserInfo(fields[0], fields[2], fields[1]);
@@ -74,10 +75,14 @@ public class UserManager {
 	}
 
 	public boolean addUser(String username, String realname, String password) {
+		// validate input data
+		if ( !validate(username) || !validate(realname) ) return false;
+		
 		if (users.containsKey(username)) return false; // username exists
 		
 		// encrypt the password
 		String encrypted = BCrypt.hashpw(password, BCrypt.gensalt());
+		
 		// save user info to database
 		UserInfo info = new UserInfo(username,realname,encrypted);
 		saveUser(info);
@@ -114,6 +119,28 @@ public class UserManager {
 				logger.warning("Exception while writing user info: " + ioe.getMessage());
 			}
 		}
+	}
+	
+	/**
+	 * Validate input values for username and real name.
+	 * This is to prevent hacking.
+	 * @param arg string to validate
+	 * @return true if arg is OK, false if has disallowed characters.
+	 */
+	private boolean validate(String arg) {
+		// special chars allowed in names
+		final String SPECIAL_CHARS = "@#$'?()~-_";
+		// don't allow field separator!
+		if (arg.contains(":")) return false;
+		if (arg.length()>255) return false;
+		char[] chars = arg.toCharArray();
+		for(char c: chars ) {
+			if (Character.isLetterOrDigit(c)) continue;
+			if (Character.isWhitespace(c)) continue;
+			if (SPECIAL_CHARS.indexOf(c) >= 0) continue;
+			return false;
+		}
+		return true;
 	}
 	
 	/**

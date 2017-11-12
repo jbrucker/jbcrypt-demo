@@ -1,2 +1,4 @@
 harry:$2a$10$jJInqdtTJ53M/cLHZNOWN.c3fP4jqzW32iO6zCuaMnR9MdlUYqBMm:Harry Hacker
 sally:$2a$10$Z2bWn8YVOPy7W/EFRxLDeOqkGkMHavN56ZbUF7A6Y0Jf//shBGTxC:Sally Cracker
+fatalai:$2a$10$S54jQ5weOC0YHllRrLVeFeaX9WbMK9NJ.od9en2fbEGgSCrwaoq6O:Fatalai Jon
+jim:$2a$10$FhrbNlIjxCeZDBiSDNgUW..gU1uLYGwTrm4nfgncurtIGAicSX7Sy:James Brucker
