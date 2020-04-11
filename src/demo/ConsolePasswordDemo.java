@@ -42,7 +42,7 @@ public class ConsolePasswordDemo {
 	 * (the parameter), encrypts it, and saves it as the encryptedPassword
 	 * attribute.
 	 * 
-	 * @param passwd   user's plain text password to encrypt (hash) and store.
+	 * @param passwd  user's plain text password to encrypt (hash) and store.
 	 */
 	public void savePassword(String passwd) {
 		// encrypt (hash) the password.  This is what the app needs to remember.
@@ -52,7 +52,8 @@ public class ConsolePasswordDemo {
 		System.out.println("Your encrypted password is: "+this.encryptedPassword );
 	}
 
-	/** Interactive demo of encrypting a password entered at the console.
+	/** 
+     *  Interactive demo of encrypting a password entered at the console.
 	 *  If you don't want the password to be visible, use java.io.Console.readPassword(),
 	 *  but it doesn't work if running inside Eclipse or other IDE.
 	 */
